@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -39,6 +40,11 @@ public class login extends HttpServlet {
             try{
                 ResultSet rs = db.getData("SELECT * FROM user WHERE username= '" + username + "' AND password= '" + password + "' AND role='" + role + "'");
                 if (rs.next()){
+                    HttpSession session = request.getSession();
+                    session.setAttribute("username", username);
+                    session.setAttribute("userId", rs.getInt("id"));
+                    session.setAttribute("role", role);
+                    
                     if (role.equals("User")){
                         response.sendRedirect("userUI.jsp");
                     } else {
