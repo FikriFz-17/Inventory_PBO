@@ -5,7 +5,6 @@
 package servlets;
 
 import classes.JDBC;
-import java.sql.ResultSet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,17 +12,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author fikri
+ * @author Faiz
  */
-@WebServlet(name = "login", urlPatterns = {"/login"})
-public class login extends HttpServlet {
+@WebServlet(name = "addBarang", urlPatterns = {"/addBarang"})
+public class addBarang extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -32,34 +31,19 @@ public class login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        JDBC db = new JDBC();
-        if (db.isCon){
+        JDBC db = new JDBC(); 
+        if (db.isCon) { 
+            String kodeBarang = request.getParameter("kodeBarang");
+            String namaBarang = request.getParameter("namaBarang");
+            String jenis = request.getParameter("jenis");
+            int stock = Integer.parseInt(request.getParameter("stock"));
+            int id = Integer.parseInt(request.getParameter("userId"));
             String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            String role = request.getParameter("userType");
-            try{
-                ResultSet rs = db.getData("SELECT * FROM user WHERE username= '" + username + "' AND password= '" + password + "' AND role='" + role + "'");
-                if (rs.next()){
-                    HttpSession session = request.getSession();
-                    session.setAttribute("username", username);
-                    session.setAttribute("userId", rs.getInt("id"));
-                    session.setAttribute("role", role);
-                    
-                    if (role.equals("User")){
-                        response.sendRedirect("userUI.jsp");
-                    } else {
-                        response.sendRedirect("adminUI.jsp");
-                    }
-                } else {
-                    response.sendRedirect("login.jsp?status=error");
-                }
-            } catch (Exception e){
-                e.printStackTrace(); // Log exception ke server
-            response.sendRedirect("login.jsp?status=error"); // Informasikan pengguna
-            }
             
-        }
-        
+            db.runQuery("insert into barang (kode, namabarang, jenisbarang, stock, owner_id, name) values ('" + kodeBarang + "', '" + namaBarang + "', '" + jenis + "', '" + stock + "', '" + id + "', '" + username + "')"); 
+            db.disconnect(); 
+        } 
+        response.sendRedirect("adminUI.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

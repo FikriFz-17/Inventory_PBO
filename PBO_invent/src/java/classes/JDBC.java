@@ -48,7 +48,15 @@ public class JDBC {
         return rs;
    }
     
-    
+    public void disconnect() {
+        try {
+            stmt.close();
+            con.close();
+            msg = "DB disconnected";
+        } catch (Exception e) {
+            msg = e.getMessage();
+        }
+    }
             
 }
 
