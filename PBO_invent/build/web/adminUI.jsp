@@ -89,7 +89,7 @@
                                     Tambah Barang
                                 </button>
 
-                                <a id="export-btn" class="btn btn-info" role="button">Export</a>
+
                                 
 
                                 <!-- The Modals -->
