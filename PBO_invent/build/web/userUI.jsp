@@ -89,7 +89,6 @@
                                     Tambah Barang
                                 </button>
 
-                                <a id="export-btn" class="btn btn-info" role="button">Export</a>
                                 
 
                                 <!-- The Modals -->
@@ -174,8 +173,9 @@
                                             <!-- Tampilkan data dari database ke halaman web -->
                                                     <tr>
                                                         <% 
+                                                            out.print(id + username);
                                                             if (db.isCon) { 
-                                                                ResultSet rs = db.getData("SELECT * FROM barang"); 
+                                                                ResultSet rs = db.getData("SELECT * FROM barang WHERE owner_id = " + id); ;
                                                                 while (rs.next()) {
                                                                     out.print("<tr>"); 
                                                                     out.print("<td>" + rs.getString("kode")+ "</td>"); 
