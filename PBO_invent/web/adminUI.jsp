@@ -246,8 +246,6 @@
                                                 <%
                                                         }
                                                         db.disconnect();
-                                                    } else {
-                                                        out.print(db.msg + "<br />");
                                                     }
                                                 %> 
                                                 </td>
