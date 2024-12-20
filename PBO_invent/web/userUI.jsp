@@ -171,26 +171,83 @@
                                         </thead>
                                         <tbody>
                                             <!-- Tampilkan data dari database ke halaman web -->
-                                                    <tr>
-                                                        <% 
-                                                            if (db.isCon) { 
-                                                                ResultSet rs = db.getData("SELECT * FROM barang"); 
-                                                                while (rs.next()) {
-                                                                    out.print("<tr>"); 
-                                                                    out.print("<td>" + rs.getString("kode")+ "</td>"); 
-                                                                    out.print("<td>" + rs.getString("namabarang")+ "</td>"); 
-                                                                    out.print("<td>" + rs.getString("name")+ "</td>"); 
-                                                                    out.print("<td>" + rs.getString("jenisbarang")+ "</td>"); 
-                                                                    out.print("<td>" + rs.getInt("stock")+ "</td>"); 
-                                                                    out.print("<td>" + "<button type='submit' class='btn btn-warning my-3' data-toggle='modal' data-target='#edit<?=$idb;?>'>Edit</button>" + "<button type='submit' class='btn btn-danger my-3' data-toggle='modal' data-target='#delete<?=$idb;?>'>Delete</button>" + "</td>");
-                                                                    out.print("</tr>"); 
-                                                                } 
-                                                                db.disconnect(); 
-                                                            } else { 
-                                                                out.print(db.msg+"<br />"); 
-                                                            } 
-                                                        %> 
-                                                    </tr>
+                                                <%
+                                                    if (db.isCon) {
+                                                        ResultSet rs = db.getData("SELECT * FROM barang");
+                                                        while (rs.next()) {
+                                                            int idBarang = rs.getInt("idbarang");
+                                                            String namaBarang = rs.getString("namabarang");
+                                                %>
+                                                <tr>
+                                                    <td><%= rs.getString("kode")%></td>
+                                                    <td><%= rs.getString("namabarang")%></td>
+                                                    <td><%= rs.getString("name")%></td>
+                                                    <td><%= rs.getString("jenisbarang")%></td>
+                                                    <td><%= rs.getInt("stock")%></td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-warning my-3" data-toggle="modal" data-target="#edit<%= idBarang%>">Edit</button>
+                                                        <button type="button" class="btn btn-danger my-3" data-toggle="modal" data-target="#delete<%= idBarang%>">Delete</button>
+
+                                                    </td>
+                                                </tr>
+                                                            <!-- Edit Modal -->   
+                                                            <div class="modal fade" id="edit<%= idBarang%>">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <!-- Modal Header -->
+                                                                        <div class="modal-header">
+                                                                            <h4 class="modal-title">Edit Barang</h4>
+                                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                        </div>
+
+                                                                        <!-- Modal body -->
+                                                                        <form method="post" action="/editBarang">
+                                                                            <div class="modal-body">
+                                                                                <input type="hidden" name="idBarang" value="<%= idBarang%>">
+                                                                                <input type="text" name="namaBarang" value="<%= rs.getString("namabarang")%>" class="form-control my-3" required>
+                                                                                <input type="text" name="jenis" value="<%= rs.getString("jenisbarang")%>" class="form-control my-3" required>
+                                                                                <input type="number" name="stock" value="<%= rs.getInt("stock")%>" class="form-control my-3" required>
+                                                                                <button type="submit" class="btn btn-warning my-3">Update</button>
+                                                                            </div>
+                                                                        </form>
+
+                                                                        <!-- Modal footer -->
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                        
+                                                            <!-- Delete Modal -->
+                                                            <div class="modal fade" id="delete<%= idBarang%>">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <!-- Modal Header -->
+                                                                        <div class="modal-header">
+                                                                            <h4 class="modal-title">Hapus Barang</h4>
+                                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                        </div>
+                                                                        <!-- Modal body -->
+                                                                        <form method="post" action="deleteBarang">
+                                                                            <div class="modal-body">
+                                                                                Hapus Barang <%= namaBarang%>
+                                                                                <input type="hidden" name="idBarang" value="<%= idBarang%>">
+                                                                                <br>
+                                                                                <button type="submit" class="btn btn-danger my-3" name="hapusBarang">Delete</button>
+                                                                            </div>
+                                                                        </form>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                <%
+                                                        }
+                                                        db.disconnect();
+                                                    } else {
+                                                        out.print(db.msg + "<br />");
+                                                    }
+                                                %>
                                         </tbody>
                                     </table>
                                 </div>
