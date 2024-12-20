@@ -170,31 +170,56 @@
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <!-- Tampilkan data dari database ke halaman web -->
-                                            
+                                       <tbody>
+                                        <!-- Tampilkan data dari database ke halaman web -->
+                                        <% 
+                                            if (db.isCon) { 
+                                                ResultSet rs = db.getData("SELECT * FROM barang"); 
+                                                while (rs.next()) {
+                                                    int idBarang = rs.getInt("idbarang");
+                                                    String namaBarang = rs.getString("namabarang");
+                                        %>
                                                     <tr>
-                                                        <% 
-                                                            if (db.isCon) { 
-                                                                ResultSet rs = db.getData("SELECT * FROM barang"); 
-                                                                while (rs.next()) {
-                                                                    out.print("<tr>"); 
-                                                                    out.print("<td>" + rs.getString("kode")+ "</td>"); 
-                                                                    out.print("<td>" + rs.getString("namabarang")+ "</td>"); 
-                                                                    out.print("<td>" + rs.getString("name")+ "</td>"); 
-                                                                    out.print("<td>" + rs.getString("jenisbarang")+ "</td>"); 
-                                                                    out.print("<td>" + rs.getInt("stock")+ "</td>"); 
-                                                                    out.print("<td>" + "<button type='submit' class='btn btn-warning my-3' data-toggle='modal' data-target='#edit<?=$idb;?>'>Edit</button>" + "<button type='submit' class='btn btn-danger my-3' data-toggle='modal' data-target='#delete<?=$idb;?>'>Delete</button>" + "</td>");
-                                                                    out.print("</tr>"); 
-                                                                } 
-                                                                db.disconnect(); 
-                                                            } else { 
-                                                                out.print(db.msg+"<br />"); 
-                                                            } 
-                                                        %> 
+                                                        <td><%= rs.getString("kode") %></td>
+                                                        <td><%= rs.getString("namabarang") %></td>
+                                                        <td><%= rs.getString("name") %></td>
+                                                        <td><%= rs.getString("jenisbarang") %></td>
+                                                        <td><%= rs.getInt("stock") %></td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-warning my-3" data-toggle="modal" data-target="#edit<%= idBarang %>">Edit</button>
+                                                            <button type="button" class="btn btn-danger my-3" data-toggle="modal" data-target="#delete<%= idBarang %>">Delete</button>
+
                                                         </td>
                                                     </tr>
-                                        </tbody>
+
+                                                    <!-- Delete Modal -->
+                                                    <div class="modal fade" id="delete<%= idBarang %>">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <!-- Modal Header -->
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Hapus Barang</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                </div>
+                                                                <!-- Modal body -->
+                                                                <form method="post" action="deleteBarang">
+                                                                    <div class="modal-body">
+                                                                        Hapus Barang <%= namaBarang %>
+                                                                        <input type="hidden" name="idBarang" value="<%= idBarang %>">
+                                                                        <br>
+                                                                        <button type="submit" class="btn btn-danger my-3" name="hapusBarang">Delete</button>
+                                                                    </div>
+                                                                </form>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                        <% 
+                                                }
+                                                db.disconnect(); 
+                                            }
+                                        %>
+                                    </tbody>
                                     </table>
                                 </div>
                             </div>
