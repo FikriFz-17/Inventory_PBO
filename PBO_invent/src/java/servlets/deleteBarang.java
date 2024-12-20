@@ -16,10 +16,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Faiz
+ * @author athal
  */
-@WebServlet(name = "addBarang", urlPatterns = {"/addBarang"})
-public class addBarang extends HttpServlet {
+@WebServlet(name = "deleteBarang", urlPatterns = {"/deleteBarang"})
+public class deleteBarang extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,24 +35,29 @@ public class addBarang extends HttpServlet {
         JDBC db = new JDBC();
         HttpSession session = request.getSession();
         String role = (String) session.getAttribute("role");
-        if (db.isCon) { 
-            String kodeBarang = request.getParameter("kodeBarang");
-            String namaBarang = request.getParameter("namaBarang");
-            String jenis = request.getParameter("jenis");
-            int stock = Integer.parseInt(request.getParameter("stock"));
-            int id = Integer.parseInt(request.getParameter("userId"));
-            String username = request.getParameter("username");
-            
-            db.runQuery("insert into barang (kode, namabarang, jenisbarang, stock, owner_id, name) values ('" + kodeBarang + "', '" + namaBarang + "', '" + jenis + "', '" + stock + "', '" + id + "', '" + username + "')"); 
-            db.disconnect(); 
+
+        String idBarang = request.getParameter("idBarang"); // Ambil parameter idBarang dari form
+
+        if (db.isCon) {
+            try {
+                // Validasi bahwa idBarang tidak kosong atau null
+                if (idBarang != null && !idBarang.trim().isEmpty()) {
+                    // Jalankan query DELETE
+                    db.runQuery("DELETE FROM barang WHERE idbarang = " + idBarang);
+                }
+            } catch (Exception e) {
+                e.printStackTrace(); // Log error untuk debugging
+            } finally {
+                db.disconnect();
+            }
         }
-        
-        if (role.equals("User")){
+
+        // Redirect sesuai dengan role
+        if ("User".equals(role)) {
             response.sendRedirect("userUI.jsp");
-        }else{
+        } else {
             response.sendRedirect("adminUI.jsp");
         }
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

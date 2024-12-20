@@ -16,10 +16,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Faiz
+ * @author ahmad
  */
-@WebServlet(name = "addBarang", urlPatterns = {"/addBarang"})
-public class addBarang extends HttpServlet {
+@WebServlet(name = "editBarang", urlPatterns = {"/editBarang"})
+public class editBarang extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,23 +36,25 @@ public class addBarang extends HttpServlet {
         HttpSession session = request.getSession();
         String role = (String) session.getAttribute("role");
         if (db.isCon) { 
-            String kodeBarang = request.getParameter("kodeBarang");
+            int idBarang = Integer.parseInt(request.getParameter("idBarang"));
             String namaBarang = request.getParameter("namaBarang");
             String jenis = request.getParameter("jenis");
             int stock = Integer.parseInt(request.getParameter("stock"));
-            int id = Integer.parseInt(request.getParameter("userId"));
-            String username = request.getParameter("username");
             
-            db.runQuery("insert into barang (kode, namabarang, jenisbarang, stock, owner_id, name) values ('" + kodeBarang + "', '" + namaBarang + "', '" + jenis + "', '" + stock + "', '" + id + "', '" + username + "')"); 
+            String query = "UPDATE barang SET namabarang='" + namaBarang +
+                           "', jenisBarang='" + jenis +
+                           "', stock=" + stock +
+                           " WHERE idbarang='" + idBarang + "'" ;
+            
+            db.runQuery(query); 
             db.disconnect(); 
-        }
+        } 
         
         if (role.equals("User")){
             response.sendRedirect("userUI.jsp");
         }else{
             response.sendRedirect("adminUI.jsp");
         }
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

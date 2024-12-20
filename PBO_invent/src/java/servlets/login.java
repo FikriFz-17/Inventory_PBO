@@ -33,6 +33,7 @@ public class login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         JDBC db = new JDBC();
+        HttpSession session = request.getSession();
         if (db.isCon){
             String username = request.getParameter("username");
             String password = request.getParameter("password");
@@ -40,7 +41,6 @@ public class login extends HttpServlet {
             try{
                 ResultSet rs = db.getData("SELECT * FROM user WHERE username= '" + username + "' AND password= '" + password + "' AND role='" + role + "'");
                 if (rs.next()){
-                    HttpSession session = request.getSession();
                     session.setAttribute("username", username);
                     session.setAttribute("userId", rs.getInt("id"));
                     session.setAttribute("role", role);

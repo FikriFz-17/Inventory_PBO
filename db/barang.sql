@@ -24,47 +24,51 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Table structure for table `barang`
 --
 
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
-  `username` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `role` varchar(50) DEFAULT NULL
+CREATE TABLE `barang` (
+  `idbarang` int(11) NOT NULL,
+  `kode` varchar(50) NOT NULL,
+  `namabarang` varchar(50) NOT NULL,
+  `jenisbarang` varchar(25) NOT NULL,
+  `stock` int(11) NOT NULL,
+  `owner_id` int(11) NOT NULL,
+  `name` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `user`
+-- Dumping data for table `barang`
 --
 
-INSERT INTO `user` (`id`, `username`, `password`, `role`) VALUES
-(1, 'fikri017', '123', 'User'),
-(2, 'mmk', '123', 'User'),
-(5, 'sucre_ding', '123', 'User'),
-(6, 'admin', '123', 'Admin'),
-(7, 'yoru', '12345', 'User');
+INSERT INTO `barang` (`idbarang`, `kode`, `namabarang`, `jenisbarang`, `stock`, `owner_id`, `name`) VALUES
+(46, 'bdg', 'iPhone 20 Pro Max', 'Handphone', 40, 5, 'sucre_ding'),
+(49, 'bdg', 'iPhone 15 Pro Max', 'Handphone', 67, 1, 'fikri017'),
+(50, 'xyz', 'Ember', 'Furniture', 77, 7, 'yoru'),
+(51, 'xyz', 'Piring', 'Peralatan Makan', 90, 6, 'admin');
+
+-- --------------------------------------------------------
+
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `user`
+-- Indexes for table `barang`
 --
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `barang`
+  ADD PRIMARY KEY (`idbarang`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT for table `barang`
 --
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-COMMIT;
+ALTER TABLE `barang`
+  MODIFY `idbarang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
