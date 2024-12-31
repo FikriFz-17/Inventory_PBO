@@ -14,6 +14,25 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
+        <% 
+            JDBC db = new JDBC(); 
+            
+            // Ambil session
+            session = request.getSession(false);
+            String username = "";
+            String role = "";
+            if (session == null || session.getAttribute("username") == null) {
+                // Jika tidak ada session, redirect ke halaman login
+                response.sendRedirect("login.jsp");
+            } else {
+                // Ambil data dari session
+                username = (String) session.getAttribute("username");
+                role = (String) session.getAttribute("role");
+                if (session != null && !role.equals("Admin")){
+                    response.sendRedirect("userUI.jsp");
+                }
+            }
+        %>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
                 <a class="navbar-brand" href="userUI.jsp">Inventori Barang</a>
                 <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
@@ -48,7 +67,7 @@
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
+                        <div class="small">Logged in as: <%= username%></div>
                     </div>
                 </nav>
             </div>
@@ -57,11 +76,6 @@
                     <div class="container-fluid">
                         <h1 class="mt-4">KELOLA USER</h1>
                         <div class="card-header">
-                                <!-- Button to Open the Modal -->
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                                    Tambah User
-                                </button>
-
                                 <!-- The Modals -->
                                 <div class="modal fade" id="myModal">
                                     <div class="modal-dialog">
@@ -110,7 +124,6 @@
                                         </thead>
                                         <tbody>
                                             <%
-                                                JDBC db = new JDBC();
                                                 if(db.isCon){
                                                     ResultSet rs = db.getData("select * from user");
                                                     while(rs.next()){

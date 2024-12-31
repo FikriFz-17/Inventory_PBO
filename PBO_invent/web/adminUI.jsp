@@ -84,7 +84,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <h1 class="mt-n4">KELOLA BARANG</h1>
+                        <h1 class="mt-4">KELOLA BARANG</h1>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <!-- Button to Open the Modal -->
