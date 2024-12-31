@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,7 +32,9 @@ public class addBarang extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        JDBC db = new JDBC(); 
+        JDBC db = new JDBC();
+        HttpSession session = request.getSession();
+        String role = (String) session.getAttribute("role");
         if (db.isCon) { 
             String kodeBarang = request.getParameter("kodeBarang");
             String namaBarang = request.getParameter("namaBarang");
@@ -41,9 +44,14 @@ public class addBarang extends HttpServlet {
             String username = request.getParameter("username");
             
             db.runQuery("insert into barang (kode, namabarang, jenisbarang, stock, owner_id, name) values ('" + kodeBarang + "', '" + namaBarang + "', '" + jenis + "', '" + stock + "', '" + id + "', '" + username + "')"); 
-            db.disconnect(); 
+            db.disconnect();        
         } 
-        response.sendRedirect("adminUI.jsp");
+        
+        if (role.equals("User")) {
+            response.sendRedirect("userUI.jsp");
+        } else {
+            response.sendRedirect("adminUI.jsp");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
