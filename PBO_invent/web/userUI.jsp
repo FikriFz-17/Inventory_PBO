@@ -89,9 +89,6 @@
                                     Tambah Barang
                                 </button>
 
-                                <a id="export-btn" class="btn btn-info" role="button">Export</a>
-                                
-
                                 <!-- The Modals -->
                                 <div class="modal fade" id="myModal">
                                     <div class="modal-dialog">
@@ -178,18 +175,6 @@
                                                             int idBarang = rs.getInt("idbarang");
                                                             String namaBarang = rs.getString("namabarang");
                                                 %>
-                                                <tr>
-                                                    <td><%= rs.getString("kode")%></td>
-                                                    <td><%= rs.getString("namabarang")%></td>
-                                                    <td><%= rs.getString("name")%></td>
-                                                    <td><%= rs.getString("jenisbarang")%></td>
-                                                    <td><%= rs.getInt("stock")%></td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-warning my-3" data-toggle="modal" data-target="#edit<%= idBarang%>">Edit</button>
-                                                        <button type="button" class="btn btn-danger my-3" data-toggle="modal" data-target="#delete<%= idBarang%>">Delete</button>
-
-                                                    </td>
-                                                </tr>
                                                             <!-- Edit Modal -->   
                                                             <div class="modal fade" id="edit<%= idBarang%>">
                                                                 <div class="modal-dialog">
@@ -286,5 +271,26 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> <!-- plugin kalo mau export ke excel -->
         <!-- jquery end -->
         <script src="export.js"></script>
+        
+        <script>
+            
+            $(document).ready(function() {
+                $('#dataTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: 'searchBarang',
+                        type: 'POST'
+                    },
+                    columns: [
+                        { data: 0 }, // Kode Barang
+                        { data: 1 }, // Nama Barang
+                        { data: 2 }, // Jenis
+                        { data: 3 },  // Stok
+                        { data: 4 }  // Aksi
+                    ]
+                });
+            });
+        </script>
     </body>
 </html>

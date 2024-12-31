@@ -89,9 +89,6 @@
                                     Tambah Barang
                                 </button>
 
-                                <a id="export-btn" class="btn btn-info" role="button">Export</a>
-
-
                                 <!-- The Modals -->
                                 <div class="modal fade" id="myModal">
                                     <div class="modal-dialog">
@@ -171,28 +168,14 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <!-- Tampilkan data dari database ke halaman web -->
-                                            <tr>
-                                                <%
+                                            <%
                                                     if (db.isCon) {
                                                         ResultSet rs = db.getData("SELECT * FROM barang");
                                                         while (rs.next()) {
                                                             int idBarang = rs.getInt("idbarang");
                                                             String namaBarang = rs.getString("namabarang");
-                                                %>
-                                                <tr>
-                                                    <td><%= rs.getString("kode")%></td>
-                                                    <td><%= rs.getString("namabarang")%></td>
-                                                    <td><%= rs.getString("name")%></td>
-                                                    <td><%= rs.getString("jenisbarang")%></td>
-                                                    <td><%= rs.getInt("stock")%></td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-warning my-3" data-toggle="modal" data-target="#edit<%= idBarang%>">Edit</button>
-                                                        <button type="button" class="btn btn-danger my-3" data-toggle="modal" data-target="#delete<%= idBarang%>">Delete</button>
-
-                                                    </td>
-                                                </tr>
-                                                            <!-- Edit Modal -->   
+                                            %>
+                                            <!-- Edit Modal -->   
                                                             <div class="modal fade" id="edit<%= idBarang%>">
                                                                 <div class="modal-dialog">
                                                                     <div class="modal-content">
@@ -246,10 +229,10 @@
                                                 <%
                                                         }
                                                         db.disconnect();
+                                                    } else {
+                                                        out.print(db.msg + "<br />");
                                                     }
-                                                %> 
-                                                </td>
-                                            </tr>
+                                                %>
                                         </tbody>
                                     </table>
                                 </div>
@@ -271,6 +254,8 @@
                 </footer>
             </div>
         </div>
+                                                
+        
 
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
@@ -289,6 +274,27 @@
         <!-- jquery end -->
         <script src="export.js"></script>
 
+        <script>
+            
+            $(document).ready(function() {
+                $('#dataTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: 'searchBarang',
+                        type: 'POST'
+                    },
+                    columns: [
+                        { data: 0 }, // Kode Barang
+                        { data: 1 }, // Nama Barang
+                        { data: 2 }, // Nama Pemilik
+                        { data: 3 }, // Jenis
+                        { data: 4 }, // Stok
+                        { data: 5 }  // Aksi
+                    ]
+                });
+            });
+        </script>
 
     </body>
 </html>
