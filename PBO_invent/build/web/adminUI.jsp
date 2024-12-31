@@ -22,9 +22,9 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <body class="sb-nav-fixed">
-        <% 
-            JDBC db = new JDBC(); 
-            
+        <%
+            JDBC db = new JDBC();
+
             // Ambil session
             session = request.getSession(false);
             String username = "";
@@ -38,13 +38,10 @@
                 username = (String) session.getAttribute("username");
                 role = (String) session.getAttribute("role");
                 id = (int) session.getAttribute("userId");
-                if (session != null && !role.equals("Admin")){
-                    response.sendRedirect("userUI.jsp");
-                }
             }
         %>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <a class="navbar-brand" href="adminUI.jsp">Inventori Barang</a>
+            <a class="navbar-brand" href="index.php">Inventori Barang</a>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
                 <i class="fas fa-bars"></i>
             </button>
@@ -55,7 +52,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="Logout.php">Logout</a>
+                        <a class="dropdown-item" href="logout">Logout</a>
                     </div>
                 </li>
             </ul>
@@ -66,7 +63,7 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Menu</div>
-                            <a class="nav-link" href="adminUI.jsp">
+                            <a class="nav-link" href="index.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Kelola Barang
                             </a>
@@ -84,7 +81,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <h1 class="mt-4">KELOLA BARANG</h1>
+                        <h1 class="mt-n4">KELOLA BARANG</h1>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <!-- Button to Open the Modal -->
@@ -290,10 +287,10 @@
                     columns: [
                         { data: 0, orderable: true }, // Kode Barang
                         { data: 1, orderable: true }, // Nama Barang
-                        { data: 2, orderable: true }, // Nama Pemilik 
-                        { data: 3, orderable: true }, // Jenis 
-                        { data: 4, orderable: true }, // Stok 
-                        { data: 5, orderable: false }  // Aksi
+                        { data: 2, orderable: true }, // Nama Pemilik (or Jenis for userUI)
+                        { data: 3, orderable: true }, // Jenis (or Stok for userUI)
+                        { data: 4, orderable: true }, // Stok (or Aksi for userUI)
+                        { data: 5, orderable: false }  // Aksi (only for adminUI)
                     ]
                 });
             });
