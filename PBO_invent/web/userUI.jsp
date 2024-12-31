@@ -38,6 +38,9 @@
                 username = (String) session.getAttribute("username");
                 role = (String) session.getAttribute("role");
                 id = (int) session.getAttribute("userId");
+                if (session != null && !role.equals("User")){
+                    response.sendRedirect("adminUI.jsp");
+                }
             }
         %>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">

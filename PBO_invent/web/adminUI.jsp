@@ -22,9 +22,9 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <body class="sb-nav-fixed">
-        <%
-            JDBC db = new JDBC();
-
+        <% 
+            JDBC db = new JDBC(); 
+            
             // Ambil session
             session = request.getSession(false);
             String username = "";
@@ -38,6 +38,9 @@
                 username = (String) session.getAttribute("username");
                 role = (String) session.getAttribute("role");
                 id = (int) session.getAttribute("userId");
+                if (session != null && !role.equals("Admin")){
+                    response.sendRedirect("userUI.jsp");
+                }
             }
         %>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
