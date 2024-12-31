@@ -39,11 +39,11 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `role`) VALUES
-(1, 'fikri017', '123', 'User'),
-(2, 'mmk', '123', 'User'),
-(5, 'sucre_ding', '123', 'User'),
-(6, 'admin', '123', 'Admin'),
-(7, 'yoru', '12345', 'User');
+(1, 'admin', '123', 'Admin'),
+(2, 'deopm', '123', 'User'),
+(3, 'sucre_ding', '123', 'User'),
+(4, 'fikri017', '123', 'User'),
+(5, 'yoru', '12345', 'User');
 
 --
 -- Indexes for dumped tables

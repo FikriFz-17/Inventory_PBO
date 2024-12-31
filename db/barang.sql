@@ -9,10 +9,10 @@ CREATE TABLE `barang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `barang` (`idbarang`, `kode`, `namabarang`, `jenisbarang`, `stock`, `owner_id`, `name`) VALUES
-(46, 'bdg', 'iPhone 20 Pro Max', 'Handphone', 40, 10, 'user1'),
-(49, 'bdg', 'iPhone 15 Pro Max', 'Handphone', 67, 5, 'fikri123'),
-(50, 'xyz', 'Ember', 'Furniture', 77, 10, 'user1'),
-(51, 'xyz', 'Piring', 'Peralatan Makan', 90, 1, 'admin');
+(46, 'bdg', 'iPhone 20 Pro Max', 'Handphone', 40, 4, 'fikri017'),
+(49, 'bdg', 'iPhone 15 Pro Max', 'Handphone', 67, 2, 'deopm'),
+(50, 'xyz', 'Ember', 'Furniture', 77, 3, 'sucre_ding'),
+(51, 'xyz', 'Piring', 'Peralatan Makan', 90, 5, 'yoru');
 
 ALTER TABLE `barang`
   ADD PRIMARY KEY (`idbarang`);

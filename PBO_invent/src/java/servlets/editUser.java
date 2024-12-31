@@ -36,10 +36,12 @@ public class editUser extends HttpServlet {
         HttpSession session = request.getSession();
         String role = (String) session.getAttribute("role");
         if (db.isCon) { 
-            String id = (request.getParameter("id"));
+            String id = request.getParameter("id");
             String username = request.getParameter("username");
             String query = "UPDATE user SET username='" + username + " ' WHERE id="+ id;
+            String query2 = "UPDATE barang SET name='" + username + " ' WHERE owner_id="+ id;
             db.runQuery(query); 
+            db.runQuery(query2); 
             db.disconnect(); 
         } 
         response.sendRedirect("backupkelolauser.jsp");

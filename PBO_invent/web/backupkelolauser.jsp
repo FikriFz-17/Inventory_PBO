@@ -34,7 +34,7 @@
             }
         %>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-                <a class="navbar-brand" href="userUI.jsp">Inventori Barang</a>
+                <a class="navbar-brand" href="adminUI.jsp">Inventori Barang</a>
                 <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -60,7 +60,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Kelola Barang
                             </a>
-                            <a class="nav-link" href="kelolaUser.jsp">
+                            <a class="nav-link" href="backupkelolauser.jsp">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Kelola User
                             </a>
@@ -75,41 +75,7 @@
                 <main>
                     <div class="container-fluid">
                         <h1 class="mt-4">KELOLA USER</h1>
-                        <div class="card-header">
-                                <!-- The Modals -->
-                                <div class="modal fade" id="myModal">
-                                    <div class="modal-dialog">
-                                    <div class="modal-content">
-                                    
-                                        <!-- Modal Header -->
-                                        <div class="modal-header">
-                                        <h4 class="modal-title">Tambah User</h4>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-                                        
-                                        <!-- Modal body -->
-                                        <form method="post" action="/addUser">
-                                            <div class="modal-body">
-                                                <input type="text" name="username" placeholder="username" class="form-control my-3" required>
-                                                <input type="password" name="password" placeholder="password" class="form-control my-3" required>
-                                                <select class="form-control mb-3" aria-label="Default select example" name="role">
-                                                    <option   option value="User" selected>User</option>
-                                                    <option value="Admin">Admin</option>
-                                                </select>
-                                                <button type="submit" class="btn btn-primary my-3" name="add">Add</button>
-                                            </div>
-                                        </form>
-                                        
-                                        <!-- Modal footer -->
-                                        <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                        </div>
-                                        
-                                    </div>
-                                    </div>
-                                </div>
-
-                            </div>
+                        <div class="card-header"></div>
                         <div class="card mb-4">
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -124,82 +90,80 @@
                                         </thead>
                                         <tbody>
                                             <%
-                                                if(db.isCon){
-                                                    ResultSet rs = db.getData("select * from user");
-                                                    while(rs.next()){
-                                                        int id = rs.getInt("id");
-                                                        out.print("<tr>");
-                                                        out.print("<td>" + id + "</td>");
-                                                        out.print("<td>" + rs.getString("username") + "</td>");
-                                                        out.print("<td>" + rs.getString("role") + "</td>");
-                                                        out.print("<td>");
-                                                        out.print("<a href='edit.jsp?id=" + id + "' class='btn btn-warning btn-sm me-2'>Edit</a>");
-                                                        out.print("<a href='edit.jsp?id=" + id + "' class='btn btn-danger btn-sm me-1'>Delete</a>");
-                                                    }
-                                                }
+                                                if (db.isCon) {
+                                                    ResultSet rs = db.getData("SELECT * FROM user");
+                                                    while (rs.next()) {
+                                                        int idUser = rs.getInt("id");
+                                                        String namaUser = rs.getString("username");
                                             %>
                                             
-<!--                                                    <tr>
-                                                        <td><?= htmlspecialchars($username); ?></td>
-                                                        <td><?= htmlspecialchars($role); ?></td>
+                                                    <tr>
+                                                        <td><%= idUser %></td>
+                                                        <td><%= namaUser %></td>
+                                                        <td><%= rs.getString("role") %></td>
                                                         <td>
-                                                            <button type="button" class="btn btn-warning btn-sm my-1" data-toggle="modal" data-target="#edit<?= $id; ?>">Edit</button>
-                                                            <button type="button" class="btn btn-danger btn-sm my-1" data-toggle="modal" data-target="#delete<?= $id; ?>">Delete</button>
-                                                        </td>
-                                                    </tr>-->
+                                                            <button type="button" class="btn btn-warning my-3" data-toggle="modal" data-target="#edit<%= idUser %>">Edit</button>
+                                                            <button type="button" class="btn btn-danger my-3" data-toggle="modal" data-target="#delete<%= idUser %>">Delete</button>
 
-                                                    <!--  Edit Modals-->
-<!--                                                        <div class="modal fade" id="edit<?=$id;?>">
-                                                            <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                            
-                                                                 Modal Header 
-                                                                <div class="modal-header">
-                                                                <h4 class="modal-title">Edit User</h4>
-                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                                </div>-->
-                                                                
-                                                                <!-- Modal body -->
-<!--                                                                <form method="post">
-                                                                    <div class="modal-body">
-                                                                        <input type="text" name="username" value="<?= htmlspecialchars($username); ?>" class="form-control my-3" required>
-                                                                        <input type="password" name="pass" placeholder="Password" class="form-control my-3">
-                                                                        <select class="form-control mb-3" aria-label="Default select example" name="role">
-                                                                            <option value="User" <?= $role === 'User' ? 'selected' : ''; ?>>User</option>
-                                                                            <option value="Admin" <?= $role === 'Admin' ? 'selected' : ''; ?>>Admin</option>
-                                                                        </select>
-                                                                        <button type="submit" class="btn btn-warning my-3" name="updateUser">Edit</button>
-                                                                        <input type="hidden" name="id" value="<?=$id;?>">
+                                                        </td>
+                                                    </tr>
+                                            
+                                                        <!-- Edit Modal -->   
+                                                            <div class="modal fade" id="edit<%= idUser%>">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <!-- Modal Header -->
+                                                                        <div class="modal-header">
+                                                                            <h4 class="modal-title">Edit User</h4>
+                                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                        </div>
+
+                                                                        <!-- Modal body -->
+                                                                        <form method="post" action="editUser">
+                                                                            <div class="modal-body">
+                                                                                <input type="hidden" name="id" value="<%= idUser%>">
+                                                                                <input type="text" name="username" value="<%= namaUser%>" class="form-control my-3" required>
+                                                                                <button type="submit" class="btn btn-warning my-3">Update</button>
+                                                                            </div>
+                                                                        </form>
+
+                                                                        <!-- Modal footer -->
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                                        </div>
                                                                     </div>
-                                                                </form>-->
-<!--                                                            </div>
-                                                            </div>
-                                                        </div>-->
-                                                    
-                                                     <!--  Delete Modals-->
-                                                     <div class="modal fade" id="delete<?=$id;?>">
-                                                            <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                            
-                                                                <!-- Modal Header -->
-                                                                <div class="modal-header">
-                                                                <h4 class="modal-title">Hapus User</h4>
-                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                                 </div>
-                                                                
-                                                                <!-- Modal body -->
-                                                                <form method="post">
-                                                                    <div class="modal-body">
-                                                                        Hapus user dengan username <?= htmlspecialchars($username); ?>?
-                                                                        <input type="hidden" name="id" value="<?=$id;?>">
-                                                                        <br>
-                                                                        <button type="submit" class="btn btn-danger my-3" name="hapusUser">Delete</button>
+                                                            </div>
+                                        
+                                                        <!-- Delete Modal -->
+                                                            <div class="modal fade" id="delete<%= idUser%>">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <!-- Modal Header -->
+                                                                        <div class="modal-header">
+                                                                            <h4 class="modal-title">Hapus User</h4>
+                                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                        </div>
+                                                                        <!-- Modal body -->
+                                                                        <form method="post" action="deleteUser">
+                                                                            <div class="modal-body">
+                                                                                Hapus User <%= namaUser%>
+                                                                                <input type="hidden" name="id" value="<%= idUser%>">
+                                                                                <br>
+                                                                                <button type="submit" class="btn btn-danger my-3">Delete</button>
+                                                                            </div>
+                                                                        </form>
+
                                                                     </div>
-                                                                </form>
-                                                                
+                                                                </div>
                                                             </div>
-                                                            </div>
-                                                        </div>
+                                                <%
+                                                    }
+                                                        db.disconnect();
+                                                    } else {
+                                                        out.print(db.msg + "<br />");
+                                                    }
+                                                %>
                                         </tbody>
                                     </table>
                                 </div>
