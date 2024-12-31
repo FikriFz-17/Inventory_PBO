@@ -38,18 +38,21 @@
                 username = (String) session.getAttribute("username");
                 role = (String) session.getAttribute("role");
                 id = (int) session.getAttribute("userId");
+                if (session != null && !role.equals("Admin")){
+                    response.sendRedirect("userUI.jsp");
+                }
             }
         %>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-                <a class="navbar-brand" href="index.php">Inventori Barang</a>
-                <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user fa-fw"></i>
-                        </a>
+            <a class="navbar-brand" href="index.php">Inventori Barang</a>
+            <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user fa-fw"></i>
+                    </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="Logout.php">Logout</a>
@@ -67,21 +70,21 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Kelola Barang
                             </a>
-                            <a class="nav-link" href="user.php">
+                            <a class="nav-link" href="backupkelolauser.jsp">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Kelola User
                             </a>
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as: <%= username %></div>
+                        <div class="small">Logged in as: <%= username%></div>
                     </div>
                 </nav>
             </div>
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <h1 class="mt-n4">KELOLA BARANG</h1>
+                        <h1 class="mt-4">KELOLA BARANG</h1>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <!-- Button to Open the Modal -->
@@ -89,73 +92,70 @@
                                     Tambah Barang
                                 </button>
 
-                                <a id="export-btn" class="btn btn-info" role="button">Export</a>
-                                
-
                                 <!-- The Modals -->
                                 <div class="modal fade" id="myModal">
                                     <div class="modal-dialog">
-                                    <div class="modal-content">
-                                    
-                                        <!-- Modal Header -->
-                                        <div class="modal-header">
-                                        <h4 class="modal-title">Tambah Barang</h4>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-                                        
-                                        <!-- Modal body -->
-                                        <form method="post" action="/addBarang">
-                                            <div class="modal-body">
-                                                <input type="hidden" name="userId" id="userId" value="<%= id %>">
-                                                <input type="hidden" name="username" id="username" value="<%= username %>">
-                                                <input type="text" name="kodeBarang" placeholder="Kode Barang" class="form-control my-3" required>
-                                                <input type="text" name="namaBarang" placeholder="Nama Barang" class="form-control my-3" required>
-                                                <input type="text" name="jenis" placeholder="Jenis Barang" class="form-control my-3" required>
-                                                <input type="number" name="stock" class="form-control my-3" placeholder="stock barang" required>
-                                                <button type="submit" class="btn btn-primary my-3" name="add">Add</button>
+                                        <div class="modal-content">
+
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Tambah Barang</h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
                                             </div>
-                                        </form>
-                                        
-                                        <!-- Modal footer -->
-                                        <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+                                            <!-- Modal body -->
+                                            <form method="post" action="/addBarang">
+                                                <div class="modal-body">
+                                                    <input type="hidden" name="userId" id="userId" value="<%= id%>">
+                                                    <input type="hidden" name="username" id="username" value="<%= username%>">
+                                                    <input type="text" name="kodeBarang" placeholder="Kode Barang" class="form-control my-3" required>
+                                                    <input type="text" name="namaBarang" placeholder="Nama Barang" class="form-control my-3" required>
+                                                    <input type="text" name="jenis" placeholder="Jenis Barang" class="form-control my-3" required>
+                                                    <input type="number" name="stock" class="form-control my-3" placeholder="stock barang" required>
+                                                    <button type="submit" class="btn btn-primary my-3" name="add">Add</button>
+                                                </div>
+                                            </form>
+
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                            </div>
+
                                         </div>
-                                                                                
-                                    </div>
                                     </div>
                                 </div>
 
                                 <!-- Add Modals -->
                                 <div class="modal fade" id="add">
                                     <div class="modal-dialog">
-                                    <div class="modal-content">
-                                    
-                                        <!-- Modal Header -->
-                                        <div class="modal-header">
-                                        <h4 class="modal-title">Tambah Barang</h4>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-                                        
-                                        <!-- Modal body -->
-                                        <form method="post">
-                                            <div class="modal-body">
-                                                <input type="text" name="namaBarang" placeholder="Nama Barang" class="form-control my-3" required>
-                                                <input type="text" name="jenis" placeholder="Jenis Barang" class="form-control my-3" required>
-                                                <input type="number" name="stock" class="form-control my-3" placeholder="stock barang" required>
-                                                <button type="submit" class="btn btn-primary my-3" name="add">Add</button>
+                                        <div class="modal-content">
+
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Tambah Barang</h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
                                             </div>
-                                        </form>
-                                        
-                                        <!-- Modal footer -->
-                                        <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+                                            <!-- Modal body -->
+                                            <form method="post">
+                                                <div class="modal-body">
+                                                    <input type="text" name="namaBarang" placeholder="Nama Barang" class="form-control my-3" required>
+                                                    <input type="text" name="jenis" placeholder="Jenis Barang" class="form-control my-3" required>
+                                                    <input type="number" name="stock" class="form-control my-3" placeholder="stock barang" required>
+                                                    <button type="submit" class="btn btn-primary my-3" name="add">Add</button>
+                                                </div>
+                                            </form>
+
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                            </div>
+
                                         </div>
-                                        
-                                    </div>
                                     </div>
                                 </div>
                             </div>
-                                   
+
                             <!-- View Modals -->                    
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -170,56 +170,73 @@
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
-                                       <tbody>
-                                        <!-- Tampilkan data dari database ke halaman web -->
-                                        <% 
-                                            if (db.isCon) { 
-                                                ResultSet rs = db.getData("SELECT * FROM barang"); 
-                                                while (rs.next()) {
-                                                    int idBarang = rs.getInt("idbarang");
-                                                    String namaBarang = rs.getString("namabarang");
-                                        %>
-                                                    <tr>
-                                                        <td><%= rs.getString("kode") %></td>
-                                                        <td><%= rs.getString("namabarang") %></td>
-                                                        <td><%= rs.getString("name") %></td>
-                                                        <td><%= rs.getString("jenisbarang") %></td>
-                                                        <td><%= rs.getInt("stock") %></td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-warning my-3" data-toggle="modal" data-target="#edit<%= idBarang %>">Edit</button>
-                                                            <button type="button" class="btn btn-danger my-3" data-toggle="modal" data-target="#delete<%= idBarang %>">Delete</button>
+                                        <tbody>
+                                            <%
+                                                    if (db.isCon) {
+                                                        ResultSet rs = db.getData("SELECT * FROM barang");
+                                                        while (rs.next()) {
+                                                            int idBarang = rs.getInt("idbarang");
+                                                            String namaBarang = rs.getString("namabarang");
+                                            %>
+                                            <!-- Edit Modal -->   
+                                                            <div class="modal fade" id="edit<%= idBarang%>">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <!-- Modal Header -->
+                                                                        <div class="modal-header">
+                                                                            <h4 class="modal-title">Edit Barang</h4>
+                                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                        </div>
 
-                                                        </td>
-                                                    </tr>
+                                                                        <!-- Modal body -->
+                                                                        <form method="post" action="/editBarang">
+                                                                            <div class="modal-body">
+                                                                                <input type="hidden" name="idBarang" value="<%= idBarang%>">
+                                                                                <input type="text" name="namaBarang" value="<%= rs.getString("namabarang")%>" class="form-control my-3" required>
+                                                                                <input type="text" name="jenis" value="<%= rs.getString("jenisbarang")%>" class="form-control my-3" required>
+                                                                                <input type="number" name="stock" value="<%= rs.getInt("stock")%>" class="form-control my-3" required>
+                                                                                <button type="submit" class="btn btn-warning my-3">Update</button>
+                                                                            </div>
+                                                                        </form>
 
-                                                    <!-- Delete Modal -->
-                                                    <div class="modal fade" id="delete<%= idBarang %>">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <!-- Modal Header -->
-                                                                <div class="modal-header">
-                                                                    <h4 class="modal-title">Hapus Barang</h4>
-                                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                                </div>
-                                                                <!-- Modal body -->
-                                                                <form method="post" action="deleteBarang">
-                                                                    <div class="modal-body">
-                                                                        Hapus Barang <%= namaBarang %>
-                                                                        <input type="hidden" name="idBarang" value="<%= idBarang %>">
-                                                                        <br>
-                                                                        <button type="submit" class="btn btn-danger my-3" name="hapusBarang">Delete</button>
+                                                                        <!-- Modal footer -->
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                                        </div>
                                                                     </div>
-                                                                </form>
-
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                        <% 
-                                                }
-                                                db.disconnect(); 
-                                            }
-                                        %>
-                                    </tbody>
+                                        
+                                                            <!-- Delete Modal -->
+                                                            <div class="modal fade" id="delete<%= idBarang%>">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <!-- Modal Header -->
+                                                                        <div class="modal-header">
+                                                                            <h4 class="modal-title">Hapus Barang</h4>
+                                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                        </div>
+                                                                        <!-- Modal body -->
+                                                                        <form method="post" action="deleteBarang">
+                                                                            <div class="modal-body">
+                                                                                Hapus Barang <%= namaBarang%>
+                                                                                <input type="hidden" name="idBarang" value="<%= idBarang%>">
+                                                                                <br>
+                                                                                <button type="submit" class="btn btn-danger my-3" name="hapusBarang">Delete</button>
+                                                                            </div>
+                                                                        </form>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                <%
+                                                        }
+                                                        db.disconnect();
+                                                    } else {
+                                                        out.print(db.msg + "<br />");
+                                                    }
+                                                %>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -240,13 +257,15 @@
                 </footer>
             </div>
         </div>
+                                                
+        
 
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-        
+
         <!-- jquery export -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
@@ -258,6 +277,27 @@
         <!-- jquery end -->
         <script src="export.js"></script>
 
+        <script>
+            $(document).ready(function() {
+                $('#dataTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ordering: true, // Enable sorting
+                    ajax: {
+                        url: 'searchBarang',
+                        type: 'POST'
+                    },
+                    columns: [
+                        { data: 0, orderable: true }, // Kode Barang
+                        { data: 1, orderable: true }, // Nama Barang
+                        { data: 2, orderable: true }, // Nama Pemilik 
+                        { data: 3, orderable: true }, // Jenis 
+                        { data: 4, orderable: true }, // Stok 
+                        { data: 5, orderable: false }  // Aksi
+                    ]
+                });
+            });
+        </script>
 
     </body>
 </html>

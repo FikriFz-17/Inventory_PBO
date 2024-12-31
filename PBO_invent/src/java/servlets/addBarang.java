@@ -44,7 +44,7 @@ public class addBarang extends HttpServlet {
             String username = request.getParameter("username");
             
             db.runQuery("insert into barang (kode, namabarang, jenisbarang, stock, owner_id, name) values ('" + kodeBarang + "', '" + namaBarang + "', '" + jenis + "', '" + stock + "', '" + id + "', '" + username + "')"); 
-            db.disconnect(); 
+            db.disconnect();        
         } 
         
         if (role.equals("User")) {
