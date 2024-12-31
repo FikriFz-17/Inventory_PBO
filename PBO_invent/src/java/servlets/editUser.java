@@ -5,7 +5,6 @@
 package servlets;
 
 import classes.JDBC;
-import java.sql.ResultSet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -17,13 +16,14 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author fikri
+ * @author ahmad
  */
-@WebServlet(name = "login", urlPatterns = {"/login"})
-public class login extends HttpServlet {
+@WebServlet(name = "editUser", urlPatterns = {"/editUser"})
+public class editUser extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -34,32 +34,15 @@ public class login extends HttpServlet {
             throws ServletException, IOException {
         JDBC db = new JDBC();
         HttpSession session = request.getSession();
-        if (db.isCon){
+        String role = (String) session.getAttribute("role");
+        if (db.isCon) { 
+            String id = (request.getParameter("id"));
             String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            String role = request.getParameter("userType");
-            try{
-                ResultSet rs = db.getData("SELECT * FROM user WHERE username= '" + username + "' AND password= '" + password + "' AND role='" + role + "'");
-                if (rs.next()){
-                    session.setAttribute("username", username);
-                    session.setAttribute("userId", rs.getInt("id"));
-                    session.setAttribute("role", role);
-                    
-                    if (role.equals("User")){
-                        response.sendRedirect("userUI.jsp");
-                    } else {
-                        response.sendRedirect("adminUI.jsp");
-                    }
-                } else {
-                    response.sendRedirect("login.jsp?status=error");
-                }
-            } catch (Exception e){
-                e.printStackTrace(); // Log exception ke server
-            response.sendRedirect("login.jsp?status=error"); // Informasikan pengguna
-            }
-            
-        }
-        
+            String query = "UPDATE user SET username='" + username + " ' WHERE id="+ id;
+            db.runQuery(query); 
+            db.disconnect(); 
+        } 
+        response.sendRedirect("backupkelolauser.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

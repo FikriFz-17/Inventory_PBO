@@ -70,7 +70,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Kelola Barang
                             </a>
-                            <a class="nav-link" href="user.php">
+                            <a class="nav-link" href="backupkelolauser.jsp">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Kelola User
                             </a>

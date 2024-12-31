@@ -70,7 +70,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Kelola Barang
                             </a>
-                            <a class="nav-link" href="user.php">
+                            <a class="nav-link" href="backupkelolauser.jsp">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Kelola User
                             </a>
@@ -278,22 +278,22 @@
         <script src="export.js"></script>
 
         <script>
-            
             $(document).ready(function() {
                 $('#dataTable').DataTable({
                     processing: true,
                     serverSide: true,
+                    ordering: true, // Enable sorting
                     ajax: {
                         url: 'searchBarang',
                         type: 'POST'
                     },
                     columns: [
-                        { data: 0 }, // Kode Barang
-                        { data: 1 }, // Nama Barang
-                        { data: 2 }, // Nama Pemilik
-                        { data: 3 }, // Jenis
-                        { data: 4 }, // Stok
-                        { data: 5 }  // Aksi
+                        { data: 0, orderable: true }, // Kode Barang
+                        { data: 1, orderable: true }, // Nama Barang
+                        { data: 2, orderable: true }, // Nama Pemilik 
+                        { data: 3, orderable: true }, // Jenis 
+                        { data: 4, orderable: true }, // Stok 
+                        { data: 5, orderable: false }  // Aksi
                     ]
                 });
             });
