@@ -44,6 +44,13 @@ public class searchBarang extends HttpServlet {
             int start = Integer.parseInt(request.getParameter("start"));
             int length = Integer.parseInt(request.getParameter("length"));
 
+            // Get sorting information
+            String orderColumn = request.getParameter("order[0][column]");
+            String orderDir = request.getParameter("order[0][dir]");
+            
+            // Define column names for sorting
+            String[] columns = {"kode", "namabarang", "name", "jenisbarang", "stock"};
+            
             JDBC db = new JDBC();
             JSONArray data = new JSONArray();
             HttpSession session = request.getSession();
@@ -52,6 +59,15 @@ public class searchBarang extends HttpServlet {
             String query;
             String countQuery;
             String searchCondition = "";
+            
+            String orderBy = "";
+            if (orderColumn != null && orderDir != null) {
+                int columnIndex = Integer.parseInt(orderColumn);
+                if (columnIndex < columns.length) {
+                    orderBy = " ORDER BY " + columns[columnIndex] + " " + orderDir;
+                }
+            }
+            
             if (role.equals("Admin")) {
                 // Base query
                 String baseQuery = "SELECT * FROM barang";
@@ -72,7 +88,7 @@ public class searchBarang extends HttpServlet {
                 }
 
                 // Get filtered data
-                query = baseQuery + searchCondition + " LIMIT " + start + ", " + length;
+                query = baseQuery + searchCondition + orderBy + " LIMIT " + start + ", " + length;
                 ResultSet rs = db.getData(query);
                 
                 while (rs.next()) {
@@ -125,7 +141,7 @@ public class searchBarang extends HttpServlet {
                 if (!searchCondition.isEmpty()) {
                     query += searchCondition;
                 }
-                query += " LIMIT " + start + ", " + length;
+                query += orderBy + " LIMIT " + start + ", " + length;
 
                 ResultSet rs = db.getData(query);
                 

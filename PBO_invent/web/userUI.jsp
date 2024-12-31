@@ -273,21 +273,21 @@
         <script src="export.js"></script>
         
         <script>
-            
             $(document).ready(function() {
                 $('#dataTable').DataTable({
                     processing: true,
                     serverSide: true,
+                    ordering: true, // Enable sorting
                     ajax: {
                         url: 'searchBarang',
                         type: 'POST'
                     },
                     columns: [
-                        { data: 0 }, // Kode Barang
-                        { data: 1 }, // Nama Barang
-                        { data: 2 }, // Jenis
-                        { data: 3 },  // Stok
-                        { data: 4 }  // Aksi
+                        { data: 0, orderable: true }, // Kode Barang
+                        { data: 1, orderable: true }, // Nama Barang
+                        { data: 2, orderable: true }, // Jenis 
+                        { data: 3, orderable: true }, // stok
+                        { data: 4, orderable: false }, // Aksi
                     ]
                 });
             });
