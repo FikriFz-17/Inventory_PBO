@@ -159,15 +159,26 @@
                     window.location.href = 'login.jsp';
                 }, 1500);
             </script>
-        <% } else if ("error".equals(status)) { %>
+        <% } else if ("passwordMismatch".equals(status)) { %>
             <div class="alert alert-danger" role="alert">
-                Error: Harap Konfirmasi Password!
+                Error: Harap konfirmasi password dengan benar!
             </div>
-        <% } else if ("dbError".equals(status)) { %>
+            <script>
+                setTimeout(() => {
+                    window.location.href = 'register.jsp';
+                }, 1500);
+            </script>
+        <% } else if ("usernameExists".equals(status)) { %>
             <div class="alert alert-warning" role="alert">
-                Error: Gagal terhubung ke database.
+                Error: Username sudah digunakan. Silakan pilih username lain.
             </div>
+            <script>
+                setTimeout(() => {
+                    window.location.href = 'register.jsp';
+                }, 1500);
+            </script>
         <% } %>
+
         
         <form method="post" action="/register">
             <div class="form-group">
