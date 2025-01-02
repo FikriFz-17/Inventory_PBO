@@ -2,7 +2,7 @@
 Anggota Kelompok :<br>
 1. Deore Mufrad Hendrady (Ketua)<br>
 2. Ahmad Qadir Jailani<br>
-2. Muhammad Faiz<br>
-3. Athala Farrastya Kamil<br>
-4. Muhammad Hilmi Fauzi<br>
-5. Fikri Fauzi<br>  
+3. Muhammad Faiz<br>
+4. Athala Farrastya Kamil<br>
+5. Muhammad Hilmi Fauzi<br>
+6. Fikri Fauzi<br>  
